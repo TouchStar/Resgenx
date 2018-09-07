@@ -1,0 +1,12 @@
+obj
+bin
+.idea
+.vs
+.nuget/
+_ReSharper.*
+*.user
+*.suo
+*.userprefs
+*.csproj.bak
+*DS_Store
+*.sln.ide
