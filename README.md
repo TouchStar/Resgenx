@@ -5,6 +5,7 @@ Converts the given XML based resource file (.resx) to a strongly typed resource 
 The Resgen.exe program shipped with Mono does support generating strongly typed resource classes.
 
 # Usage
+```
 USAGE: resgenx [OPTIONS] input_file namespace
 Converts the given XML based resource file (.resx) to a strongly typed resource class file in C#.
 
@@ -17,3 +18,4 @@ OPTIONS:
                                Net Standard 1.x
   -n, --className=VALUE      name of the class to be generated
   -o, --outputPath=VALUE     path to write the generated file
+```
