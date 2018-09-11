@@ -2,7 +2,7 @@
 Converts the given XML based resource file (.resx) to a strongly typed resource class file in C#.
 
 # Why is this needed ?
-The Resgen.exe program shipped with Mono does support generating strongly typed resource classes.
+The Resgen.exe program shipped with Mono does not support generating strongly typed resource classes.
 
 # Usage
 ```
