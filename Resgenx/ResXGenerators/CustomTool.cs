@@ -25,53 +25,66 @@
 // THE SOFTWARE.
 
 using System;
-using MonoDevelop.Projects;
 using System.CodeDom.Compiler;
-using MonoDevelop.Core;
-using System.Threading.Tasks;
 
-namespace MonoDevelop.Ide.CustomTools
+namespace TouchStar.Resgenx.ResXGenerators
 {
-	public interface ISingleFileCustomTool
-	{
-		Task Generate (ProgressMonitor monitor, ProjectFile file, SingleFileCustomToolResult result);
-	}
-	
-	public class SingleFileCustomToolResult
-	{
-		CompilerErrorCollection errors = new CompilerErrorCollection ();
-		
-		/// <summary>
-		/// Errors and warnings from the generator.
-		/// </summary>
-		public CompilerErrorCollection Errors { get { return errors; } }
-		
-		/// <summary>
-		/// The absolute name of the generated file. Must be in same directory as source file.
-		/// </summary>
-		public FilePath GeneratedFilePath { get; set; }
+    public class ResXGeneratorResult
+    {
+        /// <summary>
+        /// Errors and warnings from the generator.
+        /// </summary>
+        public CompilerErrorCollection Errors { get; } = new CompilerErrorCollection();
 
-		/// <summary>
-		/// Overrides the default action on the generated file.
-		/// </summary>
-		public string OverrideBuildAction { get; private set; }
-		
-		/// <summary>
-		/// Any unhandled exception from the generator.
-		/// </summary>
-		public Exception UnhandledException { get; set; }
-		
-		public bool Success {
-			get {
-				return UnhandledException == null && !Errors.HasErrors && !Errors.HasWarnings;
-			}
-		}
-		
-		public bool SuccessWithWarnings {
-			get {
-				return UnhandledException == null && !Errors.HasErrors && Errors.HasWarnings;
-			}
-		}
-	}
+        /// <summary>
+        /// The absolute name of the generated file. Must be in same directory as source file.
+        /// </summary>
+        public string GeneratedFilePath { get; set; }
+
+        /// <summary>
+        /// Any unhandled exception from the generator.
+        /// </summary>
+        public Exception UnhandledException { get; set; }
+
+        public bool Success {
+            get {
+                return UnhandledException == null && !Errors.HasErrors && !Errors.HasWarnings;
+            }
+        }
+
+        public bool SuccessWithWarnings {
+            get {
+                return UnhandledException == null && !Errors.HasErrors && Errors.HasWarnings;
+            }
+        }
+    }
+
+    public class ResXGeneratorOptions
+    {
+        public string InputFilePath { get; }
+
+        public string ResultNamespace { get; }
+        public string ResultClassName { get; set; }
+        public string OutputFilePath { get; set; }
+        public bool GenerateInternalClass { get; set; }
+        /// <summary>
+        /// When true, generates a class that can be used in projects that target the PCL 2 Framework, .Net Core 1.x or
+        /// .Net Standard 1.x
+        /// </summary>
+        public bool TargetPcl2Framework { get; set; }
+
+        public ResXGeneratorOptions(string inputFilePath, string resultNamespace)
+        {
+            if (string.IsNullOrEmpty(inputFilePath))
+                throw new ArgumentNullException($"Argument {nameof(inputFilePath)} cannot be null or empty");
+
+            if (string.IsNullOrEmpty(resultNamespace))
+                throw new ArgumentNullException($"Argument {nameof(resultNamespace)} cannot be null or empty");
+
+            InputFilePath = inputFilePath;
+            ResultNamespace = resultNamespace;
+        }
+
+    }
 }
 
