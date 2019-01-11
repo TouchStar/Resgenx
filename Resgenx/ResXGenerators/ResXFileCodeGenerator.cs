@@ -98,7 +98,7 @@ namespace TouchStar.Resgenx.ResXGenerators
                 }
 
                 // Avoid race if ResXFileCodeGenerator is called more than once for the same file
-                using (var fw = new FileStream(outputFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+                using (var fw = new FileStream(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     using (var w = new StreamWriter(fw, Encoding.UTF8))
                         provider.GenerateCodeFromCompileUnit(ccu, w, new CodeGeneratorOptions());
